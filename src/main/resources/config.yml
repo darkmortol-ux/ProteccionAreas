@@ -1,0 +1,76 @@
+# ==========================================================
+#  Configuración de ProteccionesAreas
+# ==========================================================
+
+sizes:
+  small:
+    blocks: 16          # área de 16x16
+    price: 500
+  large:
+    blocks: 32          # área de 32x32
+    price: 1500
+
+# Vidas iniciales de cada jugador. Al morir esta cantidad de veces
+# (perder todas sus vidas), sus protecciones quedan "raideables":
+# cualquiera puede abrir cofres/barriles/hornos etc. dentro de ellas.
+starting-lives: 15
+
+# Vida extra otorgada automáticamente por tiempo jugado (no tiempo conectado en un
+# momento puntual, sino el acumulado total del jugador en el servidor).
+lives-per-days-played:
+  enabled: true
+  days: 500          # cada cuántos "días jugados" (24000 ticks acumulados) se da 1 vida extra
+
+# Permite comprar vidas extra con dinero (Vault).
+lives-purchase:
+  enabled: true
+  price: 50000
+
+# ==========================================================
+#  ⚠️ ADVERTENCIA - USAR CON PRECAUCIÓN ⚠️
+# ==========================================================
+# Si "tnt-destroys-everything" está en true, la TNT DE USO PESADO deja de respetar
+# la lista de "protected-blocks" de abajo: destruirá TODO por igual dentro de una
+# protección, incluyendo cofres, hornos, mesas de encantamiento, etc. Los jugadores
+# raideados perderán sus objetos guardados sin ninguna protección. Actívalo solo si
+# entiendes bien esta consecuencia; por defecto está desactivado.
+tnt-destroys-everything: false
+
+# Bloques que NUNCA se destruyen, ni siquiera con la TNT especial
+# (ignorado por completo si "tnt-destroys-everything" está en true).
+# Son los bloques "de utilidad" para el jugador (cofres, mesas, etc.)
+protected-blocks:
+  - CHEST
+  - TRAPPED_CHEST
+  - ENDER_CHEST
+  - BARREL
+  - FURNACE
+  - BLAST_FURNACE
+  - SMOKER
+  - CRAFTING_TABLE
+  - ENCHANTING_TABLE
+  - BOOKSHELF
+  - CHISELED_BOOKSHELF
+  - ANVIL
+  - CHIPPED_ANVIL
+  - DAMAGED_ANVIL
+  - BREWING_STAND
+  - CARTOGRAPHY_TABLE
+  - FLETCHING_TABLE
+  - GRINDSTONE
+  - LOOM
+  - SMITHING_TABLE
+  - STONECUTTER
+  - SHULKER_BOX
+  - BEACON
+  - LECTERN
+
+# Texto que se muestra sobre la cabeza del jugador mientras tiene vidas
+lives-tag-format: "&7[Vidas: %vidas%]"
+
+# Texto que reemplaza el anterior cuando se le acaban las vidas (queda raideable)
+raid-tag-format: "&c[RAID] &7(%x%, %z%)"
+
+# Mensaje de aviso al morir
+death-warning: "&cTe quedan %vidas% vidas. Cuando lleguen a 0, tus protecciones podrán ser raideadas."
+raid-triggered-broadcast: "&4[RAID] &c%jugador% se quedó sin vidas. ¡Sus bases ya pueden ser saqueadas!"

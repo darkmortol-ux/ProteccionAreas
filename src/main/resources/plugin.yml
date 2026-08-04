@@ -1,0 +1,25 @@
+name: ProteccionesAreas
+version: '1.0.0'
+main: com.miplugin.protecciones.ProteccionesPlugin
+api-version: '1.21'
+author: DARKMORTOL
+description: Plugin de protecciones de área con raideo mediante TNT especial
+softdepend: [Vault, WorldGuard, WorldEdit]
+
+commands:
+  proteccion:
+    description: Comando principal de protecciones
+    aliases: [protecciones, claim, prot]
+    usage: /proteccion <comprar|tp|trust|untrust|info|listar|eliminar>
+
+  vidas:
+    description: Ver, comprar o administrar las vidas de un jugador
+    usage: /vidas [jugador|comprar|dar <jugador> <cantidad>]
+
+permissions:
+  proteccion.admin:
+    description: Permite administrar protecciones de cualquier jugador
+    default: op
+  proteccion.usar:
+    description: Permite usar el sistema de protecciones
+    default: true
