@@ -1,0 +1,49 @@
+ame: Compilar plugin
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar código
+        uses: actions/checkout@v4
+
+      - name: Configurar JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+
+      - name: Compilar con Maven
+        run: mvn -B clean package
+
+      - name: Subir el .jar como artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: ProteccionesAreas-jar
+          path: target/*.jar
+
+      - name: Publicar/actualizar Release con el .jar
+        if: github.event_name == 'push'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: "Última compilación"
+          body: |
+            Compilación automática más reciente del plugin ProteccionesAreas.
+            Generada desde el commit ${{ github.sha }}.
+          files: target/*.jar
+          make_latest: true
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
