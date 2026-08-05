@@ -106,7 +106,7 @@ public class LivesManager {
         firstClaimWorld.clear();
         if (!file.exists()) return;
 
-        YamlConfiguration yaml = YamlConfiguration.loadConfig(file);
+        YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
         var section = yaml.getConfigurationSection("jugadores");
         if (section == null) return;
 
