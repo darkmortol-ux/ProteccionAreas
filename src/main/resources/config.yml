@@ -10,6 +10,20 @@ sizes:
     blocks: 32          # área de 32x32
     price: 1500
 
+# Límite de protecciones que puede tener cada jugador al mismo tiempo (16x16 + 32x32 cuentan igual).
+# Se revisa de arriba hacia abajo: el jugador recibe el límite MÁS ALTO de todos los
+# permisos que tenga (así los rangos superiores pueden incluir los límites de los inferiores
+# sin tener que repetir la config). Los jugadores con "proteccion.admin" no tienen límite.
+claim-limits:
+  default: 2   # límite para quien no tiene ninguno de los permisos de abajo
+  tiers:
+    - permission: proteccion.limite.vip
+      limit: 5
+    - permission: proteccion.limite.mvp
+      limit: 8
+    - permission: proteccion.limite.elite
+      limit: 12
+
 # Vidas iniciales de cada jugador. Al morir esta cantidad de veces
 # (perder todas sus vidas), sus protecciones quedan "raideables":
 # cualquiera puede abrir cofres/barriles/hornos etc. dentro de ellas.

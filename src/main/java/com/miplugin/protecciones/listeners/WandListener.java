@@ -42,6 +42,14 @@ public class WandListener implements Listener {
             return;
         }
 
+        int limit = plugin.getClaimLimitService().getLimit(player);
+        int current = plugin.getClaimManager().getClaimsOf(player.getUniqueId()).size();
+        if (current >= limit) {
+            player.sendMessage(ChatColor.RED + "Ya alcanzaste tu límite de protecciones (" + current + "/" + limit + "). "
+                    + ChatColor.GRAY + "Elimina una con /proteccion eliminar o consigue un rango con más límite.");
+            return;
+        }
+
         if (!isAllowedByWorldGuard(player, block.getWorld(), centerX, centerZ, size)) {
             player.sendMessage(ChatColor.RED + "No puedes crear una protección aquí: el área se solapa con una región de WorldGuard donde no tienes permiso de construir.");
             return;

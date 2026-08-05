@@ -18,8 +18,17 @@ commands:
 
 permissions:
   proteccion.admin:
-    description: Permite administrar protecciones de cualquier jugador
+    description: Permite administrar protecciones de cualquier jugador (además, límite de protecciones ilimitado)
     default: op
   proteccion.usar:
     description: Permite usar el sistema de protecciones
     default: true
+  proteccion.limite.vip:
+    description: Aumenta el límite de protecciones simultáneas (rango VIP, ver config.yml)
+    default: false
+  proteccion.limite.mvp:
+    description: Aumenta el límite de protecciones simultáneas (rango MVP, ver config.yml)
+    default: false
+  proteccion.limite.elite:
+    description: Aumenta el límite de protecciones simultáneas (rango Elite, ver config.yml)
+    default: false

@@ -60,6 +60,14 @@ public class ProteccionCommand implements CommandExecutor, TabCompleter {
         int size = plugin.getConfig().getInt(path + ".blocks", small ? 16 : 32);
         double price = plugin.getConfig().getDouble(path + ".price", small ? 500 : 1500);
 
+        int limit = plugin.getClaimLimitService().getLimit(player);
+        int current = plugin.getClaimManager().getClaimsOf(player.getUniqueId()).size();
+        if (current >= limit) {
+            player.sendMessage(ChatColor.RED + "Ya alcanzaste tu límite de protecciones (" + current + "/" + limit + "). "
+                    + ChatColor.GRAY + "Elimina alguna con /proteccion eliminar o pide un permiso con más límite.");
+            return;
+        }
+
         if (!plugin.getEconomyManager().isEnabled()) {
             player.sendMessage(ChatColor.RED + "La economía (Vault) no está disponible en este servidor. No se puede comprar.");
             return;
@@ -153,11 +161,15 @@ public class ProteccionCommand implements CommandExecutor, TabCompleter {
 
     private void handleListar(Player player) {
         List<Claim> claims = plugin.getClaimManager().getClaimsOf(player.getUniqueId());
+        int max = plugin.getClaimLimitService().getLimit(player);
+        String maxText = max >= Integer.MAX_VALUE ? "ilimitado" : String.valueOf(max);
+
         if (claims.isEmpty()) {
-            player.sendMessage(ChatColor.YELLOW + "No tienes ninguna protección.");
+            player.sendMessage(ChatColor.YELLOW + "No tienes ninguna protección. " + ChatColor.GRAY
+                    + "(límite: " + maxText + ")");
             return;
         }
-        player.sendMessage(ChatColor.GOLD + "=== Tus protecciones (" + claims.size() + ") ===");
+        player.sendMessage(ChatColor.GOLD + "=== Tus protecciones (" + claims.size() + "/" + maxText + ") ===");
         for (Claim c : claims) {
             player.sendMessage(ChatColor.YELLOW + "- " + c.getSizeBlocks() + "x" + c.getSizeBlocks()
                     + ChatColor.GRAY + " en " + c.getWorld() + " (" + c.getMinX() + ", " + c.getMinZ() + ")");

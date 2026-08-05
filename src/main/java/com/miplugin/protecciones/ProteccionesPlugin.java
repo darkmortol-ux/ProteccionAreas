@@ -1,5 +1,6 @@
 package com.miplugin.protecciones;
 
+import com.miplugin.protecciones.claims.ClaimLimitService;
 import com.miplugin.protecciones.claims.ClaimManager;
 import com.miplugin.protecciones.commands.ProteccionCommand;
 import com.miplugin.protecciones.commands.VidasCommand;
@@ -20,6 +21,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class ProteccionesPlugin extends JavaPlugin {
 
     private ClaimManager claimManager;
+    private ClaimLimitService claimLimitService;
     private LivesManager livesManager;
     private NametagManager nametagManager;
     private EconomyManager economyManager;
@@ -34,6 +36,7 @@ public class ProteccionesPlugin extends JavaPlugin {
 
         this.claimManager = new ClaimManager(this);
         this.claimManager.load();
+        this.claimLimitService = new ClaimLimitService(this);
 
         this.livesManager = new LivesManager(this);
         this.livesManager.load();
@@ -123,6 +126,10 @@ public class ProteccionesPlugin extends JavaPlugin {
 
     public ClaimManager getClaimManager() {
         return claimManager;
+    }
+
+    public ClaimLimitService getClaimLimitService() {
+        return claimLimitService;
     }
 
     public LivesManager getLivesManager() {
