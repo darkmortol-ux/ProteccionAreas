@@ -66,7 +66,7 @@ public class ClaimManager {
         claimsById.clear();
         if (!file.exists()) return;
 
-        YamlConfiguration yaml = YamlConfiguration.loadConfig(file);
+        YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
         var section = yaml.getConfigurationSection("claims");
         if (section == null) return;
 
