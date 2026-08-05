@@ -4,16 +4,7 @@ Plugin para Paper 1.21.11 de protección de zonas con sistema de raideo mediante
 
 ## Requisitos
 
-- JDK 21, Maven 3.9+ para compilar
 - **Vault** + un plugin de economía (ej. EssentialsX) instalados en el servidor para poder comprar protecciones
-
-## Cómo compilar
-
-```bash
-mvn clean package
-```
-
-El .jar queda en `target/ProteccionesAreas-1.0.0.jar`. Cópialo a `plugins/`.
 
 ---
 
@@ -121,32 +112,6 @@ redstone, disparar desde un dispensador, encenderse con flecha de fuego, y se pr
 si otra explosión la alcanza (incluyendo si otra TNT la empuja hacia la detonación).
 
 ---
-
-## Compatibilidad con WorldEdit y WorldGuard
-
-**El palo de protección NO choca con las herramientas de WorldEdit.** Verifiqué la
-configuración por defecto de WorldEdit: su "wand" de selección es un `wooden_axe` (hacha de
-madera) y su "wand" de navegación es una `compass` (brújula) — ninguno usa `stick` (palo), que es
-lo que usa nuestro palo de protección. Además, el palo de protección se identifica internamente
-por una etiqueta de datos persistente (no solo por el tipo de item), así que aunque en algún
-servidor cambien el wand de WorldEdit a `stick`, un palo normal de WorldEdit nunca activará
-nuestro sistema (y viceversa).
-
-**Integración opcional con WorldGuard**: si WorldGuard está instalado, antes de crear una
-protección el plugin verifica —usando la API oficial de WorldGuard (`RegionQuery` + flag
-`BUILD`)— que tengas permiso de construir en las 4 esquinas y el centro del área elegida. Si el
-área se solapa con una región de WorldGuard donde no tienes permiso (por ejemplo, el spawn del
-servidor), no se puede crear la protección ahí y se te avisa por chat. Esta integración:
-
-- Es completamente **opcional**: si no tienes WorldGuard instalado, el plugin funciona igual sin
-  ningún chequeo extra ni error en consola.
-- No requiere que declares nada adicional; se activa sola al detectar el plugin "WorldGuard" en
-  el servidor.
-- Usa `provided` scope en Maven, así que **no se empaqueta** una copia de WorldGuard dentro de
-  nuestro `.jar` — usa la que ya tiene tu servidor instalada.
-- El pom incluye WorldGuard 7.0.12 para compilar; si tu servidor usa una versión distinta, la API
-  de la serie 7.0.x es estable entre versiones y debería funcionar sin cambios.
-
 ## Comandos y permisos
 
 | Comando | Descripción |
@@ -179,23 +144,3 @@ servidor), no se puede crear la protección ahí y se te avisa por chat. Esta in
 - Mensajes de aviso al morir y al activarse un RAID
 
 ---
-
-## Limitaciones conocidas / próximos pasos sugeridos
-
-1. **No se pudo compilar en este entorno** (sin acceso a internet para descargar `paper-api` y
-   `VaultAPI`). Revisé el código a mano, pero corre `mvn clean package` en tu máquina o en
-   GitHub Actions antes de usarlo en producción.
-2. **Detección de TNT especial dispensada/empujada**: el plugin identifica la TNT especial
-   rastreando su ubicación al colocarse, al ser prendida, o al ser disparada por un dispensador.
-   Si una TNT especial es empujada por un pistón y **luego** por la explosión de otra TNT, la
-   coincidencia se hace por cercanía (radio de 2 bloques) y tiempo (15 segundos), así que en casos
-   muy extremos de encadenados largos podría no reconocerse como especial. Es un caso límite poco
-   común en el uso normal.
-3. **Formas de protección**: las protecciones son siempre cuadradas (16x16 o 32x32) centradas en
-   el punto donde clickeaste, no permiten formas irregulares ni selección de 2 esquinas.
-4. **Persistencia de RAID solo por muertes**: no hay forma de "revivir" vidas actualmente (ej.
-   comprar vidas extra, o resetear tras cierto tiempo). Si quieres esa mecánica, puedo agregar un
-   comando admin `/vidas dar <jugador> <cantidad>` o un sistema de recuperación de vidas con el
-   tiempo.
-5. Los nombres de los equipos de scoreboard usan el prefijo `prot_` + nombre del jugador; si usas
-   otro plugin que también controle equipos/scoreboard, podrían pisarse entre sí.
