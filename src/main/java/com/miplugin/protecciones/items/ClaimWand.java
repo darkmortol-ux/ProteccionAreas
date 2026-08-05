@@ -15,15 +15,13 @@ import java.util.List;
 public class ClaimWand {
 
     private final NamespacedKey sizeKey;
-    private final Material material;
 
-    public ClaimWand(Plugin plugin, Material material) {
+    public ClaimWand(Plugin plugin) {
         this.sizeKey = new NamespacedKey(plugin, "proteccion_wand_size");
-        this.material = material;
     }
 
     public ItemStack create(int sizeBlocks) {
-        ItemStack item = new ItemStack(material, 1);
+        ItemStack item = new ItemStack(Material.STICK, 1);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.AQUA + "Palo de Protección " + ChatColor.WHITE + "(" + sizeBlocks + "x" + sizeBlocks + ")");
         meta.setLore(List.of(
@@ -40,7 +38,7 @@ public class ClaimWand {
 
     /** Devuelve el tamaño (16 o 32) si el item es un palo de protección válido, o -1 si no lo es. */
     public int getSize(ItemStack item) {
-        if (item == null || item.getType() != material || !item.hasItemMeta()) return -1;
+        if (item == null || item.getType() != Material.STICK || !item.hasItemMeta()) return -1;
         Integer size = item.getItemMeta().getPersistentDataContainer().get(sizeKey, PersistentDataType.INTEGER);
         return size != null ? size : -1;
     }
