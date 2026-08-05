@@ -12,7 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
-import org.bukkit.event.entity.TNTPrimeEvent;
+import org.bukkit.event.block.TNTPrimeEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashSet;
